@@ -1,0 +1,254 @@
+#include<stdio.h>
+#include<conio.h>
+#include<windows.h>
+#include <stdlib.h>
+#include<string.h>
+
+void start ();
+void menu(int);
+void newnote();
+void editnote();
+void opennote();
+void delet();
+int exit();
+char pass1[3];
+
+struct schedule{
+	int choice;
+	char name[50],date[10],note[1000],read[1000],edit[500],ch1,ch2,pass2[7];
+	
+	FILE *fp;
+} s;
+
+int main()
+{
+
+
+
+start();
+	return 0;
+	}
+	
+	void start()
+	{
+		system("color 5f");
+	printf("\t\t*************Welcome to Diary*************\n")	;	
+	printf("\n\n\t\t\t\t\n\n");	
+	printf("\n\n\t1.New Note\t2.Open note\t3.Add note\t4.delete\n\n\n\n\t\t\t       5.Exit\n\n\t\t        ");
+	//printf("\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t By Nishkarsh maitry");
+
+		scanf("%d",&s.choice);
+		 menu(s.choice);
+		}
+	void menu(int choice)	
+	{ 
+		switch(choice)
+		{
+			case 1:newnote();
+			break;
+			case 2:opennote();
+			break;
+			case 3:editnote();
+			break;
+			case 4:delet();
+			break;
+			case 5:exit();
+			break;
+			default:
+				printf("please select an valid option");
+			}
+			
+			}
+		
+		void newnote()
+		{int i=0;
+			s.fp=fopen("D:\\h.txt","w");
+			if(s.fp==NULL)
+			
+				printf("file doesnt exist");
+				else
+				{   	system("cls");
+					printf("Enter Name : ");
+				  scanf(" %[^\n]", s.name);
+					fprintf(s.fp,"Name: %s\n",s.name);
+					printf("\nEnter date ddmmmyyyy : ");
+			      scanf(" %[^\n]", s.date);
+					fprintf(s.fp,"date: %s\n",s.date);
+					printf("\n\n\n\n\n \t\t\t\t Enter new password(int)\n\t\t\t\t");
+						s.fp=fopen("D:\\pass.txt","w");
+					while(i<=3)
+					{
+					s.ch1=getch();
+					pass1[i]=s.ch1;
+							printf("*");
+						//	fprintf("s.fp","password:");
+						fprintf(s.fp," %c",pass1[i]);
+					
+						i++;
+					}
+				fclose(s.fp);
+					system("cls");
+					system("color 6e");
+					printf("%s\n%s",s.name,s.date);
+					printf("\n\n\t\tWrite Your Personal Notes Here\n\n");
+					s.fp=fopen("D:\\h.txt","a");
+					scanf(" %[^\n]", s.note);
+			     	fprintf(s.fp,"Note: %s\n",s.note);
+			     	
+			     	system("cls");
+			        printf("\t \t \t\tFile Saved\n\n\n\n\n\n \t\t\t\tPress any key to go Menu");
+			     	getch();
+			     	system("cls");
+					 start();
+			
+					
+				}
+				
+			}
+		
+		
+		void opennote()
+		{int i=1;
+			system("cls");system("color 0c");
+			printf("\n\n\n\n\n\n\n\t\t\t\tEnter password\n\t\t\t\t");
+				s.fp=fopen("D:\\pass.txt","r");
+				while(!feof(s.fp))
+{
+	fgets(pass1,10,s.fp);
+		
+		}
+		s.pass2[0]=' ';s.pass2[2]=' ';s.pass2[4]=' ';s.pass2[6]=' ';
+	
+			while(i<=7)
+					{
+					s.ch2=getch();
+					s.pass2[i]=s.ch2;
+							printf("*");
+						i=i+2;
+					}
+					
+			
+					if(strcmp(pass1,s.pass2)==0){
+					system("color 6e");
+			s.fp=fopen("D:\\h.txt","r");
+			if(s.fp==NULL)
+			
+			printf("File not found");
+			else
+			{
+		system("cls");system("color 3c");
+		printf("\t\t\t    FIle Opened\n\n");	
+	while(!feof(s.fp))
+{
+	fgets(s.read,150,s.fp);
+		puts(s.read);}
+		printf("\n\n\t\t\t press any key to go Menu");
+		if(getch())
+		{
+			system("cls");
+		start();
+		}
+	
+}
+}
+else
+printf("\n\t\t\tIncorrect password");
+}
+
+		
+		void editnote()
+		{
+			int i=1;
+			system("cls");system("color 0c");
+			printf("\n\n\n\n\n\n\n\t\t\t\tEnter password\n\t\t\t\t");
+				s.fp=fopen("D:\\pass.txt","r");
+				while(!feof(s.fp))
+{
+	fgets(pass1,10,s.fp);
+		
+		}
+		s.pass2[0]=' ';s.pass2[2]=' ';s.pass2[4]=' ';s.pass2[6]=' ';
+	
+			while(i<=7)
+					{
+					s.ch2=getch();
+					s.pass2[i]=s.ch2;
+							printf("*");
+						i=i+2;
+					}
+					if(strcmp(pass1,s.pass2)==0){
+					system("cls");system("color 3c");
+			
+		 system("cls");
+	s.fp=fopen("D:\\h.txt","r");
+			if(s.fp==NULL)
+			printf("File not found");
+			else
+			{
+				while(!feof(s.fp))
+{
+	fgets(s.read,150,s.fp);
+		puts(s.read);}
+	
+		s.fp=fopen("D:\\h.txt","a");
+			printf("\nEnter date ddmmmyyyy : ");
+			      scanf(" %[^\n]", s.date);
+					fprintf(s.fp,"date: %s\n",s.date);
+				scanf(" %[^\n]", s.note);
+			     	fprintf(s.fp,"Note: %s\n",s.note);
+		
+}
+	printf("\n\n\t\t\t press any key to go Menu");
+		if(getch())
+		{
+			system("cls");
+		start();
+		}	
+		
+	}
+	else
+	printf("\n\n\n\t\t\t\tIncorrect password");
+		}	
+
+		
+	
+
+		
+		void delet()
+		{
+			int i=1;
+			system("cls");system("color 0c");
+			printf("\n\n\n\n\n\n\n\t\t\t\tEnter password\n\t\t\t\t");
+				s.fp=fopen("D:\\pass.txt","r");
+				while(!feof(s.fp))
+{
+	fgets(pass1,10,s.fp);
+		
+		}
+		s.pass2[0]=' ';s.pass2[2]=' ';s.pass2[4]=' ';s.pass2[6]=' ';
+	
+			while(i<=7)
+					{
+					s.ch2=getch();
+					s.pass2[i]=s.ch2;
+							printf("*");
+						i=i+2;
+					}
+					if(strcmp(pass1,s.pass2)==0){
+					
+		if(	remove("d:\\h.txt")==0)
+		printf("\n\t\t\t\t\tdeleted successfully");
+		else
+		printf("\nunable to delete");
+	}else 
+	printf("\n\n\t\t\t\t\tIncorrect password");
+		}
+		
+		int exit()
+		{
+			
+		exit(0);	
+			
+		}
+		
+		
